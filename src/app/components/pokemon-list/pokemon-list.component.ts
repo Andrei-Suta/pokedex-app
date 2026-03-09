@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, input, OnDestroy, output, viewChild } from '@angular/core';
 import { SimplePokemon } from 'types/simple-pokemon.type';
 
 import { PokemonListItemComponent } from '../pokemon-list-item/pokemon-list-item.component';
@@ -24,6 +24,7 @@ import { PokemonListItemComponent } from '../pokemon-list-item/pokemon-list-item
                 @for (pokemon of pokemonList(); let index = $index; track pokemon.name) {
                     <app-pokemon-list-item [index]="$index" [pokemon]="pokemon" />
                 }
+                <div #listEnd style="height: 1px;"></div>
             </section>
         </div>
 
@@ -32,6 +33,26 @@ import { PokemonListItemComponent } from '../pokemon-list-item/pokemon-list-item
     styleUrl: './pokemon-list.component.scss',
     imports: [PokemonListItemComponent],
 })
-export class PokemonListComponent {
+export class PokemonListComponent implements AfterViewInit, OnDestroy {
     readonly pokemonList = input<SimplePokemon[]>([]);
+    readonly scrolledToBottom = output<void>();
+    private listEnd = viewChild<ElementRef>('listEnd');
+    private observer?: IntersectionObserver;
+
+    ngAfterViewInit() {
+        this.observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                this.scrolledToBottom.emit();
+            }
+        }, { threshold: 0.1 });
+
+        const anchorElement = this.listEnd()?.nativeElement;
+        if (anchorElement) {
+            this.observer.observe(anchorElement);
+        }
+    }
+
+    ngOnDestroy() {
+        this.observer?.disconnect();
+    }
 }
