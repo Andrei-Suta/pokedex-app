@@ -6,30 +6,21 @@ import { PokemonListItemComponent } from '../pokemon-list-item/pokemon-list-item
 @Component({
     selector: 'app-pokemon-list',
     template: `
-        <header>
-            <nav>
-                <button class="big-button blue"></button>
-            </nav>
-            <div class="nav-shadow"></div>
+        <div class="flex flex-grow max-h-[calc(100%-76px)] -mt-[48px] pt-10 pb-[32px] px-[32px] bg-[#d71f06] rounded-bl-[32px]">
 
-            <div class="top-bar">
-                <button class="small-button red"></button>
-                <button class="small-button yellow"></button>
-                <button class="small-button green"></button>
-            </div>
-        </header>
-
-        <div class="section-wrapper">
-            <section>
+            <section class="screen-inset-shadow flex flex-col flex-grow bg-black text-white overflow-auto p-[8px] rounded-[32px] rounded-bl-[16px] rounded-tr-none">
                 @for (pokemon of pokemonList(); let index = $index; track pokemon.name) {
                     <app-pokemon-list-item [index]="$index" [pokemon]="pokemon" />
                 }
-                <div #listEnd style="height: 1px;"></div>
-            </section>
+                <div #listEnd class="h-4 w-full bg-transparent">
+                </div>    
+            </section>  
         </div>
-
         <footer></footer>
     `,
+    host: {
+        class: 'flex flex-col'
+    },
     styleUrl: './pokemon-list.component.scss',
     imports: [PokemonListItemComponent],
 })
@@ -44,7 +35,7 @@ export class PokemonListComponent implements AfterViewInit, OnDestroy {
             if (entries[0].isIntersecting) {
                 this.scrolledToBottom.emit();
             }
-        }, { threshold: 0.1 });
+        }, { threshold: 0.0001 });
 
         const anchorElement = this.listEnd()?.nativeElement;
         if (anchorElement) {
