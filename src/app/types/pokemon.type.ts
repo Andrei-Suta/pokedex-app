@@ -9,4 +9,7 @@ export interface Pokemon {
     weight: number;
     types: PokemonType[];
     sprites: PokemonSprite;
+    stats: { base_stat: number; stat: { name: string } }[];
+    abilities: { ability: { name: string } }[];
+    moves: { move: { name: string, url: string } }[];
 }
