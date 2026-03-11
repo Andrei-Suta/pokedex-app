@@ -2,16 +2,16 @@ import { injectTwHostClass } from 'util/inject-tw-host-class.util';
 
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { GlobalLoaderComponent } from 'components/global-loader/global-loader.component';
 
 @Component({
     selector: 'app-layout',
-    imports: [RouterOutlet],
+    imports: [RouterOutlet, GlobalLoaderComponent],
     template: `
-        <!-- Pokemon list -->
-        <!-- Pokemon Detail -->
-            <div class="pokemon-detail-wrapper">
-                <router-outlet name="detail"></router-outlet>
-            </div>
+        <app-global-loader />
+        <div class="pokemon-detail-wrapper">
+            <router-outlet name="detail"></router-outlet>
+        </div>
         <div class="divider"><div class="divider-hl"></div></div>
         <div class="pokemon-list">
             <router-outlet></router-outlet>

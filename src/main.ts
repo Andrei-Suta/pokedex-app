@@ -1,10 +1,11 @@
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { enableProdMode, provideZonelessChangeDetection } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { provideQueryClient, QueryClient } from '@tanstack/angular-query-experimental';
 
+import { loaderInterceptor } from 'interceptors/loader.interceptor';
 import { routes } from './app/app.routes';
 import { LayoutComponent } from './app/layout/layout.component';
 import { environment } from './environments/environment';
@@ -18,7 +19,7 @@ bootstrapApplication(LayoutComponent, {
         provideZonelessChangeDetection(),
         provideAnimationsAsync(),
         provideQueryClient(new QueryClient()),
-        provideHttpClient(),
-        provideRouter(routes),
+        provideHttpClient(withInterceptors([loaderInterceptor])),
+        provideRouter(routes, withComponentInputBinding()),
     ],
 }).catch((err) => console.error(err));
