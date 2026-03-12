@@ -115,9 +115,9 @@ nav {
             @for (tab of ['stats', 'abilities', 'moves']; track tab) {
                 <button
                     (click)="changeTab(tab)"
-                    [class.bg-gray-400]="activeTab() === tab"
-                    [class.bg-gray-300]="activeTab() !== tab"
-                    class="flex-auto p-2 rounded-md capitalize transition-colors font-bold text-white-800 transition-colors duration-300 delay-150 hover:bg-cyan-350"
+                    [class.bg-yellow-300]="activeTab() === tab"
+                    [class.bg-yellow-200]="activeTab() !== tab"
+                    class="flex-auto p-2 rounded-md capitalize transition-colors font-bold text-white-800 transition-colors duration-300 delay-150 hover:bg-yellow-400"
                 >
                     {{ tab }}
                 </button>
