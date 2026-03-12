@@ -7,17 +7,28 @@ import { TypewriterComponent } from '../../typewriter/typewriter.component';
     selector: 'app-pokemon-info',
     imports: [TypewriterComponent],
     template: `
-        <app-typewriter [text]="pokemonInfo()?.name" />
-
+        <div class="display-flex">
+            <button class="small-button red"></button>
+            <button class="small-button red"></button>
+        </div>
         <div class="sprite-wrapper">
-            @if (pokemonInfo(); as pokemonInfo) {
-                <div
-                    class="sprite"
-                    [style.background-image]="'url(' + pokemonInfo.sprites['front_default'] + ')'"
-                ></div>
-            }
+            <div class="pokedex-screen">
+                <div class="pokemon-container">
+                @if (pokemonInfo(); as pokemonInfo) {
+                    <div
+                        class="sprite"
+                        [style.background-image]="'url(' + pokemonInfo.sprites['front_default'] + ')'"
+                    ></div>
+                }
+                </div>
+            </div>
+            <app-typewriter [text]="pokemonInfo()?.name" />
+
         </div>
     `,
+    host: {
+        class: 'block relative w-[50%] h-full bg-white pt-0 px-[25px] pb-[25px]'
+    },
     styleUrl: './pokemon-info.component.scss',
 })
 export class PokemonInfoComponent {
